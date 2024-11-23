@@ -28,8 +28,11 @@ if not os.path.isdir("./results"):
 
 def main():
     # Question 1
+    
     print("[i] Running Simulations for question 1")
-    q1_df = run_question(1)
+    # q1_df = run_question(1) # TODO: UNCOMMENT
+    q1_df = pd.read_csv("./results/q1_model_simulation_results.csv", index_col=0)
+    print(q1_df)
 
     plt_effect_of_theta(q1_df, "q1")
     plt_effect_of_u(q1_df, "q1")

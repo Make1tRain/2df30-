@@ -1,4 +1,4 @@
-from model import *
+from models.model import model, model_gamma_4_16, model_gamma_02_08
 import sys 
 
 # This method is to run the simulation on multiple terminals. 
@@ -13,7 +13,7 @@ def run_multiple_terminals(model1:model, i):
 def run_on_single_terminal(model): 
     u0List = [16000 * i for i in [0,1,2,3,4,5]]
     thetaList = [0.01, 0.1, 0.5, 0.9, 1 ,2]
-    df = model.simulate_multiprocessing(u0List, thetaList,n=100)
+    df = model.simulate_multiprocessing(u0List, thetaList,n=1000)
     print(df)
     return df 
 

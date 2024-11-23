@@ -9,7 +9,7 @@ def plt_effect_of_theta(df, name):
     for i in range(len(df.index)): 
         axs[i].scatter(x=df.columns, y=df[df.index==df.index[i]])
 
-    fig.savefig(f"./results/{name}")
+    fig.savefig(f"./results/{name}_theta.png")
 
 def plt_effect_of_u(df, name): 
     fig, axs = plt.subplots(nrows=2, ncols=3)
@@ -18,4 +18,4 @@ def plt_effect_of_u(df, name):
     for i in range(len(df.index)): 
         axs[i].scatter(x=df.index, y=df[df.index==df.index[i]])
 
-    fig.savefig(f"./rsults/{name}")
+    fig.savefig(f"./results/{name}_u.png")
