@@ -26,32 +26,35 @@ thetaList = [0.01, 0.1, 0.5, 0.9, 1 ,2]
 if not os.path.isdir("./results"): 
     os.mkdir("results")
 
+def main():
+    # Question 1
+    print("[i] Running Simulations for question 1")
+    q1_df = run_question(1)
 
-# Question 1
-print("[i] Running Simulations for question 1")
-q1_df = run_question(1)
+    plt_effect_of_theta(q1_df, "q1")
+    plt_effect_of_u(q1_df, "q1")
 
-plt_effect_of_theta(q1_df, "q1")
-plt_effect_of_u(q1_df, "q1")
+    # Question 2 
 
-# Question 2 
+    # Question 3 
 
-# Question 3 
+    # Question 4
 
-# Question 4
+    # Question 5
 
-# Question 5
+    # Gamma(4, 16)
+    print("[i] Running Simulations for question 1")
+    q5_1_df = run_question(5.1)
 
-# Gamma(4, 16)
-print("[i] Running Simulations for question 1")
-q5_1_df = run_question(5.1)
+    plt_effect_of_theta(q5_1_df, "q5_1")
+    plt_effect_of_u(q5_1_df, "q5_1")
 
-plt_effect_of_theta(q5_1_df, "q5_1")
-plt_effect_of_u(q5_1_df, "q5_1")
+    # Gamma(0.2, 0.8)
+    print("[i] Running Simulations for question 1")
+    q5_2_df = run_question(5.2)
 
-# Gamma(0.2, 0.8)
-print("[i] Running Simulations for question 1")
-q5_2_df = run_question(5.2)
+    plt_effect_of_theta(q5_2_df, "q5_2")
+    plt_effect_of_u(q5_2_df, "q5_2")
 
-plt_effect_of_theta(q5_2_df, "q5_2")
-plt_effect_of_u(q5_2_df, "q5_2")
+if __name__ == "__main__": 
+    main()
