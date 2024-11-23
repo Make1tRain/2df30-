@@ -22,6 +22,11 @@ TIME_HORIZON = 2000
 u0List = [16000 * i for i in [0,1,2,3,4,5]]
 thetaList = [0.01, 0.1, 0.5, 0.9, 1 ,2]
 
+# Create folders: 
+if not os.path.isdir("./results"): 
+    os.mkdir("results")
+
+
 # Question 1
 print("[i] Running Simulations for question 1")
 q1_df = run_question(1)
