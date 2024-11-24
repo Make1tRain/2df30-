@@ -31,7 +31,7 @@ def main():
     
     print("[i] Running Simulations for question 1")
     # q1_df = run_question(1) # TODO: UNCOMMENT
-    q1_df = pd.read_csv("./results/q1_model_simulation_results.csv", index_col=0)
+    q1_df = pd.read_csv("./results/q1_model_simulation_results.csv", index_col=0) # TODO: COMMENT
     print(q1_df)
 
     plt_effect_of_theta(q1_df, "q1")
@@ -46,15 +46,19 @@ def main():
     # Question 5
 
     # Gamma(4, 16)
-    print("[i] Running Simulations for question 1")
-    q5_1_df = run_question(5.1)
+    print("[i] Running Simulations for question 5, Gamma(4, 16)")
+    # q5_1_df = run_question(5.1) # TODO: UNCOMMENT
+    q5_1_df = pd.read_csv("./results/q5_gamma_4_16_model_simulation_results.csv", index_col=0) # TODO: COMMENT
+    print(q5_1_df)
 
     plt_effect_of_theta(q5_1_df, "q5_1")
     plt_effect_of_u(q5_1_df, "q5_1")
 
     # Gamma(0.2, 0.8)
-    print("[i] Running Simulations for question 1")
-    q5_2_df = run_question(5.2)
+    print("[i] Running Simulations for question 5, Gamma(0.2, 0.8)")
+    # q5_2_df = run_question(5.2) # TODO: UNCOMMENT
+    q5_2_df = pd.read_csv("./results/q5_gamma_02_08_model_simulation_results.csv", index_col=0)# TODO: COMMENT
+    print(q5_2_df)
 
     plt_effect_of_theta(q5_2_df, "q5_2")
     plt_effect_of_u(q5_2_df, "q5_2")

@@ -192,10 +192,16 @@ def process_pair(u, theta, index_pair, result_queue, model, n):
 
 # Question 5
 class model_gamma_4_16(model): 
-    def generate_interArrival_time(self):     
-        return stats.gamma(a=4, scale=1/16)
+    def __init__(self, time_horizon, lambda_arrival, claimSize_mean):
+        super().__init__(time_horizon, lambda_arrival, claimSize_mean)
+
+    def set_interArrival_time(self):     
+        self.interArrivalDist =  stats.gamma(a=4, scale=1/16)
 
 class model_gamma_02_08(model): 
-    def generate_interArrival_time(self):     
-        return stats.gamma(a=0.2, scale=1/0.8)
+    def __init__(self, time_horizon, lambda_arrival, claimSize_mean):
+        super().__init__(time_horizon, lambda_arrival, claimSize_mean)
+
+    def set_interArrival_time(self):     
+        self.interArrivalDist = stats.gamma(a=0.2, scale=1/0.8)
 
