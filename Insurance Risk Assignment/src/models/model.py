@@ -23,7 +23,7 @@ class _model_functions():
         
     def simulate_once_and_plot(self, u0, theta):
         c = (1 + theta) * self.lambda_arrival * self.claimSize_mean  # self.claimSize_mean is E(X_i)
-        arrivalTimes, cumulativeClaims, levels, MaxAggLoss, ruin = self.run(u0, c)
+        ruin, D, recoveryTime = self.run(u0, c)
 
         # plt.figure()
         # plt.step(arrivalTimes, cumulativeClaims, "b", where="post")
@@ -112,24 +112,48 @@ class model(_model_functions, _model_disributions):
         minimumPoint = min(levels)
         ruin = minimumPoint < 0
         MaxAggLoss = u0 - minimumPoint 
+
+        D = None # TODO: Remove None's
+        recoveryTime = None 
+
+        if bool(ruin): 
+            l = [i,val for i,val in enumerate(levels) if i < 0]
+            ruinIndex = l[0][0]
+            D = l[0][1]
+
+            recoveryIndex = None
+            for i,val in enumerate(levels)[ruinIndex:]: 
+                if val >= 0: 
+                    recoveryIndex = i
+                    break 
+            
+            if ruinIndex and recoveryIndex:  
+                recoveryTime = arrivalTimes[recoveryIndex] - arrivalTimes[ruinIndex]
         
-        return arrivalTimes, cumulativeClaims, levels, MaxAggLoss, ruin
+        
+        return ruin, D, recoveryTime
 
     def simulate_one_pair(self, u0, theta, n):
         start = time.time()
         result = np.zeros(n)
+        DList = np.zeros(n)
+        RList = np.zeros(n)
         c = (1 + theta) * self.lambda_arrival * self.claimSize_mean  # self.claimSize_mean is E(X_i)
 
         for i in range(n):
-            arrivalTimes, cumulativeClaims, levels, MaxAggLoss, ruin = self.run(u0, c)
+            ruin, D, recoveryTime = self.run(u0, c)
             result[i] = 1 if ruin == True else 0
+            DList[i] = D 
+            RList[i] = recoveryTime
             print(f"[i] (u={u0},theta={theta}) Run: {i}")
 
         end = time.time()
         print(
             f"[i] (u={u0},theta={theta}) Time taken for {n} simulations: {end - start} seconds, this is equal to {(end - start) / n} seconds per run."
         )
-        return np.mean(result)
+        
+        # ruin, D, R
+        return np.mean(result), np.mean([i for i in DList if i != None]), np.mean([i for i in RList if i != None])
     
     def simulate(self, u0List, thetaList, n=1000):
 
