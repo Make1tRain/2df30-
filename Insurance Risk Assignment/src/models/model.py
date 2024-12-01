@@ -112,12 +112,15 @@ class model(_model_functions, _model_disributions):
         minimumPoint = min(levels)
         ruin = minimumPoint < 0
         MaxAggLoss = u0 - minimumPoint 
+        D, recoveryTime = None, None 
 
-        D = None # TODO: Remove None's
+        """
+        3D = None # TODO: Remove None's
+
         recoveryTime = None 
 
         if bool(ruin): 
-            l = [i,val for i,val in enumerate(levels) if i < 0]
+            l = [i,val for i,val in enumerate(levels) if val < 0]
             ruinIndex = l[0][0]
             D = l[0][1]
 
@@ -130,8 +133,10 @@ class model(_model_functions, _model_disributions):
             if ruinIndex and recoveryIndex:  
                 recoveryTime = arrivalTimes[recoveryIndex] - arrivalTimes[ruinIndex]
         
+        """
         
         return ruin, D, recoveryTime
+        # return ruin 
 
     def simulate_one_pair(self, u0, theta, n):
         start = time.time()
@@ -143,8 +148,8 @@ class model(_model_functions, _model_disributions):
         for i in range(n):
             ruin, D, recoveryTime = self.run(u0, c)
             result[i] = 1 if ruin == True else 0
-            DList[i] = D 
-            RList[i] = recoveryTime
+            # DList[i] = D 
+            # RList[i] = recoveryTime
             print(f"[i] (u={u0},theta={theta}) Run: {i}")
 
         end = time.time()
