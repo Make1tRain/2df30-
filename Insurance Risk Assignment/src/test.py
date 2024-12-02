@@ -10,7 +10,7 @@ import os
 
 # Import my code 
 from functions.plot import *
-from models.model import model, model_gamma_4_16, model_gamma_02_08
+from models.model import model, model_gamma_4_16, model_gamma_02_08, model_question_6
 from models.run_models import run_question
 
 # Constants
@@ -26,13 +26,7 @@ LAMBDA_ARRIVAL= 4
 CLAIMSIZE_MEAN = 16000 
 TIME_HORIZON = 2000 
 
-# m = model_gamma_4_16(TIME_HORIZON, LAMBDA_ARRIVAL, CLAIMSIZE_MEAN)
-# m.simulate_one_pair(16000, 0.01, n=5)
+if __name__ == "__main__": 
 
-# model_gamma_02_08()
-
-q1_df = pd.read_csv("./results/q1_model_simulation_results.csv", index_col=0)
-print(q1_df)
-
-plt_effect_of_theta(q1_df, "q1")
-plt_effect_of_u(q1_df, "q1")
+    result = run_question(6)
+    [print(i) for i in result]

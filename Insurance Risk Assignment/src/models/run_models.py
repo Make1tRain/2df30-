@@ -1,4 +1,4 @@
-from models.model import model, model_gamma_4_16, model_gamma_02_08
+from models.model import model, model_gamma_4_16, model_gamma_02_08, model_question_6
 import sys 
 
 # This method is to run the simulation on multiple terminals. 
@@ -10,12 +10,12 @@ def run_multiple_terminals(model1:model, i):
     df = model1.simulate(u0List, thetaList)
     return df
 
-def run_on_single_terminal(model): 
+def run_on_single_terminal(model, n): 
     u0List = [16000 * i for i in [0,1,2,3,4,5]]
     thetaList = [0.01, 0.1, 0.5, 0.9, 1 ,2]
-    df = model.simulate_multiprocessing(u0List, thetaList,n=1000)
+    df = model.simulate_multiprocessing(u0List, thetaList,n=n)
     print(df)
-    return df 
+    return df
 
 def run_question(i:int): 
     """_summary_
@@ -33,17 +33,21 @@ def run_question(i:int):
     if i == 1: 
         m = model(TIME_HORIZON, LAMBDA_ARRIVAL, CLAIMSIZE_MEAN) 
         m.set_name("q1_model")
-        df = run_on_single_terminal(m)
+        df = run_on_single_terminal(m, n=1000)
 
     elif i == 5.1: 
         m = model_gamma_4_16(TIME_HORIZON, LAMBDA_ARRIVAL, CLAIMSIZE_MEAN) 
         m.set_name("q5_gamma_4_16_model")
-        df = run_on_single_terminal(m)
+        df = run_on_single_terminal(m, n=1000)
 
     elif i == 5.2: 
         m = model_gamma_02_08(TIME_HORIZON, LAMBDA_ARRIVAL, CLAIMSIZE_MEAN) 
         m.set_name("q5_gamma_02_08_model")
-        df = run_on_single_terminal(m)
+        df = run_on_single_terminal(m, n=1000)
+
+    elif i == 6: 
+        m = model_question_6(TIME_HORIZON, LAMBDA_ARRIVAL, CLAIMSIZE_MEAN)
+        df = run_on_single_terminal(m, n=1000)
 
     return df
 
@@ -80,29 +84,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-#    def simulate_threading(self, u0List, thetaList, n=1000):
-#         import threading 
-        
-#         def process_pair(u, theta, result, index_pair):
-#             print(f"({u},{theta})Thread Created") 
-#             result[index_pair[0]][index_pair[1]] = self.simulate_one_pair(u, theta, n)
-
-#         threads = [] 
-#         result = [[None] * len(thetaList)] * len(u0List)
-
-#         for i,u in enumerate(u0List): 
-#             for j, theta in enumerate(thetaList): 
-#                 thread = threading.Thread(target=process_pair, args=(u, theta, result, (i,j)))
-#                 threads.append(thread)
-#                 thread.start()
-
-#         for thread in threads:
-#             thread.join()
-
-#         self.df = pd.DataFrame(columns=thetaList, data=result) 
-#         self.df.index = u0List
-#         self.savefig() 
-
-#         return self.df
