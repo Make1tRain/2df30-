@@ -315,3 +315,65 @@ def process_pair_q6(u, theta, index_pair, model, n):
     
     # Return the result (index_pair, ruin_prob, D, R)
     return (index_pair, ruin_prob, D, R)
+
+
+class model_question_7(model): 
+    def run(self, u0, c):
+        # for this iteration of the model, the only thing we care about is the probability that a second loan will be taken. 
+
+        # we first get a sample from the number of claims RV N(t) ~ Pois(lam * t)
+        N = round(self.time_horizon*self.lambda_arrival)
+
+        # We get interarrival times ~ Expon(lambda) which is a property of PP
+        interArrivals = self.interArrivalDist.rvs(N)
+        arrivalTimes = np.cumsum(interArrivals)
+
+        # We sample the claim sizes
+        claimSizes = self.claimSizeDist.rvs(N)
+        cumulativeClaims = np.cumsum(claimSizes)
+
+        # Calculate U(t) at every t
+        levels = u0 + arrivalTimes * c - cumulativeClaims
+
+        if len(levels) == 0:
+            print(levels, N) 
+
+        minimumPoint = min(levels)
+        ruin = minimumPoint < 0
+
+        # if ruin happens: 
+        if bool(ruin): 
+            # We need T: moment of first ruin, if ruin occurs; and U(T): capital at ruin         
+            ruinLevels = [val for val in levels if val < 0] # every item is u(t) under 0 
+
+            # we check if the capital decreases below U(T) ever again. 
+            for level in ruinLevels[1:]: 
+                if level < ruinLevels[0]: # this would mean that another load is required. 
+                    return True
+            return False 
+        else:
+            return None 
+    
+    def simulate_one_pair(self, u0, theta, n):
+        start = time.time()
+        c = (1 + theta) * self.lambda_arrival * self.claimSize_mean  # self.claimSize_mean is E(X_i)
+        
+        secondLoanList = [0] * n
+
+        for i in range(n):
+            secondLoan = self.run(u0, c)
+
+            if secondLoan == True: 
+                secondLoanList[i] = 1
+            
+            elif secondLoan == False: 
+                secondLoanList[i] = 0
+
+            print(f"[i] (u={u0},theta={theta}) Run: {i}")
+
+        end = time.time()
+        print(
+            f"[i] (u={u0},theta={theta}) Time taken for {n} simulations: {end - start} seconds, this is equal to {(end - start) / n} seconds per run."
+        )
+        
+        return np.mean(secondLoanList)

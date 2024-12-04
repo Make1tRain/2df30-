@@ -1,4 +1,4 @@
-from models.model import model, model_gamma_4_16, model_gamma_02_08, model_question_6
+from models.model import model, model_gamma_4_16, model_gamma_02_08, model_question_6, model_question_7
 import sys 
 
 # This method is to run the simulation on multiple terminals. 
@@ -47,6 +47,11 @@ def run_question(i:int):
 
     elif i == 6: 
         m = model_question_6(TIME_HORIZON, LAMBDA_ARRIVAL, CLAIMSIZE_MEAN)
+        df = run_on_single_terminal(m, n=1000)
+
+    elif i == 7: 
+        m = model_question_7(TIME_HORIZON, LAMBDA_ARRIVAL, CLAIMSIZE_MEAN) 
+        m.set_name("q7_model")
         df = run_on_single_terminal(m, n=1000)
 
     return df

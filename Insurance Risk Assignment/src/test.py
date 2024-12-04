@@ -10,8 +10,9 @@ import os
 
 # Import my code 
 from functions.plot import *
-from models.model import model, model_gamma_4_16, model_gamma_02_08, model_question_6
+from models.model import model, model_gamma_4_16, model_gamma_02_08, model_question_6, model_question_7
 from models.run_models import run_question
+from functions.calculations import question2
 
 # Constants
 LAMBDA_ARRIVAL= 4
@@ -28,5 +29,4 @@ TIME_HORIZON = 2000
 
 if __name__ == "__main__": 
 
-    result = run_question(6)
-    [print(i) for i in result]
+    run_question(7)

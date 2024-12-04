@@ -38,6 +38,8 @@ def main():
     # plt_effect_of_u(q1_df, "q1")
 
     # Question 2 
+    
+
 
     # Question 3 
 
@@ -51,8 +53,8 @@ def main():
     q5_1_df = pd.read_csv("./results/q5_gamma_4_16_model_simulation_results.csv", index_col=0) # TODO: COMMENT
     print(q5_1_df)
 
-    plt_effect_of_theta(q5_1_df, "q5_1")
-    plt_effect_of_u(q5_1_df, "q5_1")
+    # plt_effect_of_theta(q5_1_df, "q5_1")
+    # plt_effect_of_u(q5_1_df, "q5_1")
 
     # -- Gamma(0.2, 0.8)
     print("[i] Running Simulations for question 5, Gamma(0.2, 0.8)")
@@ -60,8 +62,8 @@ def main():
     q5_2_df = pd.read_csv("./results/q5_gamma_02_08_model_simulation_results.csv", index_col=0)# TODO: COMMENT
     print(q5_2_df)
 
-    plt_effect_of_theta(q5_2_df, "q5_2")
-    plt_effect_of_u(q5_2_df, "q5_2")
+    # plt_effect_of_theta(q5_2_df, "q5_2")
+    # plt_effect_of_u(q5_2_df, "q5_2")
 
     # Question 6
     print("[i] Running Simulations for question 6")
@@ -71,10 +73,11 @@ def main():
     q6_D_df = pd.read_csv("./results/q6_D_simulation_results.csv", index_col=0)# TODO: COMMENT
     q6_R_df = pd.read_csv("./results/q6_R_simulation_results.csv", index_col=0)# TODO: COMMENT
 
-
     print(q6_ruin_df)
     print(q6_D_df)
     print(q6_D_df)
+
+    # Question 7
 
 
 if __name__ == "__main__": 
