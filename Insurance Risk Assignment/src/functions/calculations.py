@@ -6,8 +6,8 @@ def question2():
     c1, c2, alpha1, alpha2 = sy.symbols("c_1 c_2 alpha_1 alpha_2")
 
     # Nominator coefficient equations
-    eq1 = sy.Eq(4000 * t, c1 * alpha1 + c2 * alpha2)
-    eq2 = sy.Eq(t, c1 * alpha1 * alpha2 + c2 * alpha1 * alpha2)
+    eq1 = sy.Eq(1/(64000000 * (t + 1) **2) * 4000 * t, c1 * alpha1 + c2 * alpha2)
+    eq2 = sy.Eq(1/(64000000 * (t + 1) **2) * t, c1 * alpha1 * alpha2 + c2 * alpha1 * alpha2)
 
     # quadratic formula a,b,c
     a = 64000000 * (1 + t) ** 2
@@ -37,12 +37,20 @@ def question2():
     # I simplified them all by hand and the results I got are the following: (bunlarin usttekilere esit oldugunu kontrol ettim ama siz de kontrol edebilirsiniz isterseniz)
     alpha1_simplified = (4 * t + 3 - sy.sqrt(8*t+9)) / (32000 * (1 + t))
     alpha2_simplified = (4 * t + 3 - sy.sqrt(8*t+9)) / (32000 * (1 + t))
-    c1_simplified = (64000000 * (t**2 + t) * (4 * t + 5 + sy.sqrt(8 * t + 9))) / (-(8*t+9)+((4 * t + 3) * sy.sqrt(8 * t + 9)))
-    c2_simplified = (64000000 * (t + 1) * (sy.sqrt(8 * t + 9) -2*t-3)) / (sy.sqrt(8 * t + 9))
+    # TODO: FIX C VALUES
+    # c1_simplified = (64000000 * (t**2 + t) * (4 * t + 5 + sy.sqrt(8 * t + 9))) / (-(8*t+9)+((4 * t + 3) * sy.sqrt(8 * t + 9)))
+    # c2_simplified = (64000000 * (t + 1) * (sy.sqrt(8 * t + 9) -2*t-3)) / (sy.sqrt(8 * t + 9))
 
     u = sy.symbols("u")
 
     ruin_prob = c1 * sy.exp(-alpha1 * u) + c2 * sy.exp(-alpha2 * u)
 
-    ruin_prob = ruin_prob.subs({alpha1: alpha1_simplified, alpha2: alpha2_simplified, c1:c1_simplified, c2:c2_simplified, u:16000})
-    ruin_prob.subs({t:1}).evalf() # bu absurt bi deger veriyo
+    # ruin_prob = ruin_prob.subs({alpha1: alpha1_simplified, alpha2: alpha2_simplified, c1:c1_simplified, c2:c2_simplified, u:16000})-
+    ruin_prob = ruin_prob.subs({alpha1: alpha1_simplified, alpha2: alpha2_simplified, c1:c1_val, c2:c2_val})
+    val = ruin_prob.subs({t:2, u:16000}).evalf() # bu absurt bi deger veriyo
+    print(val)
+
+if __name__ == "__main__":
+    question2()
+
+     
